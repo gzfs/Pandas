@@ -45,7 +45,11 @@ class LoginForm extends StatelessWidget {
                 height: 200,
               ),
               const TextField(
+                style: TextStyle(fontFamily: "Urbanist"),
                 decoration: InputDecoration(
+                  hintText: "Email",
+                  contentPadding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   fillColor: Colors.amber,
                   filled: true,
                   border: OutlineInputBorder(
@@ -57,7 +61,13 @@ class LoginForm extends StatelessWidget {
                 height: 20,
               ),
               const TextField(
+                style: TextStyle(fontFamily: "Urbanist"),
+                keyboardType: TextInputType.visiblePassword,
+                obscureText: true,
                 decoration: InputDecoration(
+                  hintText: "Password",
+                  contentPadding:
+                      EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
                   filled: true,
                   fillColor: Colors.amber,
                   border: OutlineInputBorder(
@@ -66,7 +76,7 @@ class LoginForm extends StatelessWidget {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                padding: EdgeInsets.only(top: 20.0),
                 child: Text(
                   "or",
                   style: TextStyle(

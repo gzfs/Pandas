@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:pandas/pages/home.dart';
 import 'package:pandas/pages/login.dart';
+import 'package:pandas/pages/signup.dart';
 
 class AppRouter {
   GoRouter appRouter = GoRouter(routes: [
@@ -14,7 +14,7 @@ class AppRouter {
         path: "/",
         name: "home",
         builder: (ctx, state) {
-          return const Home();
+          return const Register();
         })
   ]);
 }

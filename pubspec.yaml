@@ -38,6 +38,8 @@ dependencies:
   iconsax: ^0.0.8
   go_router: ^13.1.0
   google_fonts: ^6.1.0
+  intl: ^0.19.0
+  scroll_date_picker: ^3.7.3
 
 dev_dependencies:
   flutter_test:
