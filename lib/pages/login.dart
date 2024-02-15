@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pandas/widgets/button.dart';
+import 'package:pandas/widgets/text_field.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -55,43 +56,15 @@ class _LoginState extends State<LoginForm> {
                 image: AssetImage("assets/Login_Panda.png"),
                 height: 200,
               ),
-              TextField(
-                style: const TextStyle(fontFamily: "Urbanist"),
-                onChanged: (String? newInput) {
-                  userEmail = newInput;
-                },
-                decoration: const InputDecoration(
-                  hintText: "Email",
-                  contentPadding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-                  fillColor: Colors.amber,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                  ),
-                ),
-              ),
+              CustomTextField(setValueFunction: (String? newValue) {
+                userEmail = newValue;
+              }, placeholderValue: "Email"),
               const SizedBox(
                 height: 20,
               ),
-              TextField(
-                style: const TextStyle(fontFamily: "Urbanist"),
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                onChanged: (String? newInput) {
-                  userPassword = newInput;
-                },
-                decoration: const InputDecoration(
-                  hintText: "Password",
-                  contentPadding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-                  filled: true,
-                  fillColor: Colors.amber,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25)),
-                  ),
-                ),
-              ),
+              CustomTextField(setValueFunction: (String? newValue) {
+                userPassword =  newValue;
+              }, placeholderValue: "Password",),
               Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Row(
