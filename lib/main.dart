@@ -5,9 +5,14 @@ void main() {
   runApp(const Main());
 }
 
-class Main extends StatelessWidget {
+class Main extends StatefulWidget {
   const Main({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _MainState();
+}
+
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

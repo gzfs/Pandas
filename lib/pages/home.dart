@@ -27,7 +27,10 @@ class _Home extends State<Home> {
                 ),
               ],
             ),
-            const DiamondButton(
+            DiamondButton(
+              validateFunc: () {
+                return true;
+              },
               buttonInversion: false,
               goRoute: "/login",
             )

@@ -6,10 +6,11 @@ import 'package:iconsax/iconsax.dart';
 
 class DiamondButton extends StatelessWidget {
   const DiamondButton(
-      {super.key, required this.buttonInversion, required this.goRoute});
+      {super.key, required this.buttonInversion, required this.goRoute, required this.validateFunc});
 
   final bool buttonInversion;
   final String goRoute;
+  final Function validateFunc;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class DiamondButton extends StatelessWidget {
       angle: 45.0 * pi / 180,
       child: OutlinedButton(
           onPressed: () {
-            context.go(goRoute);
+            if(validateFunc()) context.push(goRoute);
           },
           style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.only(right: 2.0),

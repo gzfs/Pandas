@@ -23,8 +23,8 @@ class DatePicker extends StatefulWidget {
 }
 
 class _DatePickerState extends State<DatePicker> {
-  DateTime currentDate = DateTime.now().toLocal();
-  DateTime today = DateTime.now().toLocal();
+  DateTime currentDate = DateTime.now().toLocal().subtract(const Duration(seconds: 567648000));
+  DateTime today = DateTime.now().toLocal().subtract(const Duration(seconds: 567648000));
 
   String get _yesterDay {
     int yDay = currentDate.day - 1 > 0
@@ -232,16 +232,6 @@ class _DatePickerState extends State<DatePicker> {
           },
         ),
       ],
-    );
-  }
-
-  Widget divider() {
-    return Divider(
-      height: 1,
-      thickness: 1,
-      indent: 20,
-      endIndent: 20,
-      color: Theme.of(context).dividerColor,
     );
   }
 }
