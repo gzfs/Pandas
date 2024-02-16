@@ -19,12 +19,28 @@ class Login extends StatelessWidget {
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
-
   @override
   State<StatefulWidget> createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginForm> {
+
+
+  void _getSharedPreferences() async {
+
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+  }
+
+  FutureBuilder<String>() {
+
+    throw UnimplementedError();
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -58,13 +74,13 @@ class _LoginState extends State<LoginForm> {
               ),
               CustomTextField(setValueFunction: (String? newValue) {
                 userEmail = newValue;
-              }, placeholderValue: "Email"),
+              }, placeholderValue: "Email", inputType: TextInputType.emailAddress),
               const SizedBox(
                 height: 20,
               ),
               CustomTextField(setValueFunction: (String? newValue) {
                 userPassword =  newValue;
-              }, placeholderValue: "Password",),
+              }, placeholderValue: "Password", inputType: TextInputType.visiblePassword, isPassword: true,),
               Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Row(
@@ -82,8 +98,10 @@ class _LoginState extends State<LoginForm> {
                   )),
             ],
           ),
-          DiamondButton(buttonInversion: false, goRoute: "/", validateFunc: (){
+          DiamondButton(buttonInversion: false, goRoute: "/discover", validateFunc: (){
             if(userEmail == null || userPassword == null){
+              var errorSnackBar = const SnackBar(content: Text("Error! Fill all the Fields"), backgroundColor: Colors.red, );
+              ScaffoldMessenger.of(context).showSnackBar(errorSnackBar);
               return false;
             }
             return true;

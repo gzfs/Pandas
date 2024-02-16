@@ -28,7 +28,7 @@ class AppRouter {
         path: "/",
         name: "home",
         builder: (ctx, state) {
-          return const Home();
+          return const Discover();
         })
   ]);
 }

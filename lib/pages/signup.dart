@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pandas/widgets/button.dart';
 import 'package:pandas/widgets/date_picker.dart';
+import 'package:pandas/widgets/text_field.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -54,68 +55,19 @@ class _RegisterState extends State<Register> {
                         const SizedBox(
                           height: 40,
                         ),
-                        const TextField(
-                          style: TextStyle(fontFamily: "Urbanist"),
-                          decoration: InputDecoration(
-                            hintText: "Name",
-                            contentPadding: EdgeInsets.only(
-                                left: 20, right: 20, top: 20, bottom: 20),
-                            fillColor: Colors.amber,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
-                            ),
-                          ),
-                        ),
+                        CustomTextField(setValueFunction: (String? newValue){}, placeholderValue: "Name", inputType: TextInputType.name),
                         const SizedBox(
                           height: 20,
                         ),
-                        const TextField(
-                          style: TextStyle(fontFamily: "Urbanist"),
-                          decoration: InputDecoration(
-                            hintText: "Email",
-                            contentPadding: EdgeInsets.only(
-                                left: 20, right: 20, top: 20, bottom: 20),
-                            fillColor: Colors.amber,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
-                            ),
-                          ),
-                        ),
+                        CustomTextField(setValueFunction: (String? newValue){}, placeholderValue: "Email", inputType: TextInputType.emailAddress),
                         const SizedBox(
                           height: 20,
                         ),
-                        const TextField(
-                          style: TextStyle(fontFamily: "Urbanist"),
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            contentPadding: EdgeInsets.only(
-                                left: 20, right: 20, top: 20, bottom: 20),
-                            fillColor: Colors.amber,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
-                            ),
-                          ),
-                        ),
+                        CustomTextField(setValueFunction: (String? newValue){}, isPassword: true, placeholderValue: "Password", inputType: TextInputType.visiblePassword),
                         const SizedBox(
                           height: 20,
                         ),
-                        const TextField(
-                          style: TextStyle(fontFamily: "Urbanist"),
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            hintText: "Age",
-                            contentPadding: EdgeInsets.only(
-                                left: 20, right: 20, top: 20, bottom: 20),
-                            fillColor: Colors.amber,
-                            filled: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(25)),
-                            ),
-                          ),
-                        ),
+                        CustomTextField(setValueFunction: (String? newValue){}, placeholderValue: "Age", readOnly: true, inputType: TextInputType.text),
                       ],
                     ),
                   ),
