@@ -1,24 +1,33 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
+
 import 'package:iconsax/iconsax.dart';
 
 class DiamondButton extends StatelessWidget {
-  const DiamondButton(
-      {super.key, required this.buttonInversion, required this.goRoute, required this.validateFunc});
+  DiamondButton(
+      {super.key,
+      required this.buttonInversion,
+      this.goRoute,
+      required this.validateFunc,
+      this.getPerms});
 
   final bool buttonInversion;
-  final String goRoute;
+  String? goRoute;
   final Function validateFunc;
+  Function? getPerms;
 
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
       angle: 45.0 * pi / 180,
       child: OutlinedButton(
-          onPressed: () {
-            if(validateFunc()) context.push(goRoute);
+          onPressed: () async {
+            if (validateFunc() && goRoute != null) Get.toNamed(goRoute!);
+            if (getPerms != null) await getPerms!();
           },
           style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.only(right: 2.0),
