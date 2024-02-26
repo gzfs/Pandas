@@ -1,13 +1,23 @@
 // ignore_for_file: must_be_immutable
 
+// ignore_for_file: must_be_immutable
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:get/get.dart';
+
 import 'package:iconsax/iconsax.dart';
 
 class DiamondButton extends StatelessWidget {
+  DiamondButton(
+      {super.key,
+      required this.buttonInversion,
+      this.goRoute,
+      required this.validateFunc,
+      this.getPerms});
   DiamondButton(
       {super.key,
       required this.buttonInversion,
