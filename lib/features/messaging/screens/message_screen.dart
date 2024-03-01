@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -54,10 +55,21 @@ class _MessageScreenState extends State<MessageScreen> {
                             border: Border.all(color: Colors.black)))
                   ],
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 StreamBuilder(
                     stream: chatController.getMessages(receiverId!, senderId!),
                     builder: (ctx, snapshot) {
-                      print("$receiverId $senderId");
+
+                      if(snapshot.connectionState == ConnectionState.waiting) {
+                        return const  CircularProgressIndicator();
+                      }
+
+                      if(kDebugMode){
+                        print(snapshot.data?.docs[3]["timestamp"]);
+                      }
+
                       return Expanded(
                         child: ListView(
                           children: snapshot.data?.docs
@@ -66,6 +78,9 @@ class _MessageScreenState extends State<MessageScreen> {
                         ),
                       );
                     }),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -116,12 +131,22 @@ Widget _buildMessageItem(DocumentSnapshot chatDoc) {
       child: Align(
         alignment: alignment,
         child: Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.only(top: 15, bottom: 15, left: 20, right: 20),
           decoration: BoxDecoration(
             color: Colors.amber,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Text(data['message']),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(data['message'], style: const TextStyle(
+                fontSize: 16
+              ),),
+              Text(data["timestamp"].toDate().toString().split(" ")[1].split(".")[0], style: const TextStyle(
+                fontSize: 10
+              ),)
+            ],
+          ),
         ),
       ));
 }

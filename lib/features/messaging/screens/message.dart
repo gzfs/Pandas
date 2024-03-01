@@ -60,11 +60,9 @@ class _MessageState extends State<Message> {
                               itemCount: snapshot.data.docs.length,
                               itemBuilder: (context, index) {
                                 return messageTile(
-                                  snapshot.data.docs[index]["senderName"],
                                   snapshot.data.docs[index]["receiverId"],
-                                  snapshot.data.docs[index]["senderImage"],
                                   snapshot.data.docs[index]["senderId"],
-                                  snapshot.data.docs[index]["status"],
+                                    snapshot.data.docs[index]["status"]
                                 );
                               }),
                         )
@@ -78,66 +76,84 @@ class _MessageState extends State<Message> {
     );
   }
 
-  Widget messageTile(String userName, String receiverID, String userImage,
-      String senderId, String requestStatus) {
-    return Container(
-      margin: const EdgeInsets.only(top: 5, bottom: 5),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.amber,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: NetworkImage(userImage)),
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(color: Colors.black))),
-          const SizedBox(
-            width: 15,
-          ),
-          Expanded(
-            child: Text(
-              userName,
-              style: const TextStyle(
-                fontSize: 20,
-                fontFamily: "Urbanist",
+  Widget messageTile(String receiverID, String senderId, String reqStatus) {
+    
+    var receiverUser = discoverController.getUserByID(receiverID);
+    var senderUser = discoverController.getUserByID(senderId);
+    
+    return FutureBuilder(future: (senderId == BluetoothState.instance.userID) ? receiverUser : senderUser, builder: (ctx, snapshot){
+      if(snapshot.connectionState == ConnectionState.waiting){
+        return const CircularProgressIndicator();
+      }
+
+      Map<String, dynamic> snapshotData =
+      snapshot.data as Map<String, dynamic>;
+
+      return Container(
+        margin: const EdgeInsets.only(top: 5, bottom: 5),
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          color: Colors.amber,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+                width: 70,
+                height: 70,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: NetworkImage(snapshotData["avatar"])),
+                    color: Colors.amber,
+                    borderRadius: BorderRadius.circular(50),
+                    border: Border.all(color: Colors.black))),
+            const SizedBox(
+              width: 15,
+            ),
+            Expanded(
+              child: Text(
+                snapshotData["name"],
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontFamily: "Urbanist",
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-          OutlinedButton(
-            onPressed: (requestStatus != "pending")
-                ? () {
-                    Get.toNamed("/message_screen", parameters: {
-                      "receiverId": receiverID,
-                      "receiverName": userName,
-                      "receiverImage": userImage,
-                      "senderId": senderId,
-                    });
-                  }
-                : () async {
-                    await discoverController.acceptRequest(
-                        receiverID, BluetoothState.instance.userID);
-                    Get.toNamed("/message_screen", parameters: {
-                      "receiverId": receiverID,
-                      "receiverName": userName,
-                      "receiverImage": userImage,
-                      "senderId": senderId,
-                    });
-                  },
-            child: const Icon(Iconsax.message),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(
+              width: 15,
+            ),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.amber,
+                fixedSize: const Size(70, 70)
+              ),
+              onPressed: (reqStatus != "pending")
+                  ? () {
+                Get.toNamed("/message_screen", parameters: {
+                  "receiverId": receiverID,
+                  "receiverName": snapshotData["name"],
+                  "receiverImage": snapshotData["avatar"],
+                  "senderId": senderId,
+                });
+              }
+                  : () async {
+                if(senderId != BluetoothState.instance.userID){
+                  await discoverController.acceptRequest(
+                      receiverID, BluetoothState.instance.userID);
+                  Get.toNamed("/message_screen", parameters: {
+                    "receiverId": receiverID,
+                    "receiverName": snapshotData["name"],
+                    "receiverImage": snapshotData["avatar"],
+                    "senderId": senderId,
+                  });
+                }
+              },
+              child: (reqStatus != "pending") ? const Icon(Iconsax.message) : const Icon(Iconsax.tick_circle),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

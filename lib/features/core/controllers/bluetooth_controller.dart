@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_nearby_connections/flutter_nearby_connections.dart';
 import 'package:get/get.dart';
@@ -60,7 +59,7 @@ class BluetoothState extends GetxController with StateMixin {
                 await nearbyServices.stopBrowsingForPeers();
                 await nearbyServices.startAdvertisingPeer();
               } else {
-                change(recvdUsers, status: RxStatus.loading());
+                if(recvdUsers.isEmpty) change(recvdUsers, status: RxStatus.loading());
                 await nearbyServices.stopAdvertisingPeer();
                 await nearbyServices.startBrowsingForPeers();
               }
@@ -70,18 +69,12 @@ class BluetoothState extends GetxController with StateMixin {
 
     streamSubscription =
         nearbyServices.stateChangedSubscription(callback: (devicesList) async {
-      if (kDebugMode) {
-        print("Discovered: $devicesList");
-      }
       discoveredDevices.clear();
       discoveredDevices.addAll(devicesList);
       for (var element in devicesList) {
         if (element.deviceId != userID) {
           var recvdUser =
               await UserRepository.instance.getUserById(element.deviceName);
-          if (kDebugMode) {
-            print("Recvd User: $recvdUser");
-          }
           if (!recvdUsers.any((elem) {
             return elem["id"] == recvdUser["id"];
           })) {

@@ -9,6 +9,10 @@ class DiscoverController extends GetxController {
     return await userRepo.getUserByEmail(userEmail);
   }
 
+  Future<Map<String, dynamic>> getUserByID(String? userID) async {
+    return await userRepo.getUserById(userID);
+  }
+
   Future<void> createMessageRequest(String? senderId, String? receiverId,
       String? senderName, String? senderImage) async {
     await userRepo.createMessageRequest(
